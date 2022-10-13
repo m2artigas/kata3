@@ -11,8 +11,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class HistogramDisplay extends ApplicationFrame {
-    public HistogramDisplay() {
-        super("HISTOGRAMA");
+    private Histogram<String> histogram;
+
+    public HistogramDisplay(String title, Histogram<String> histogram) {
+        super(title);
+        this.histogram = histogram;
         setContentPane(createPanel());
         pack();
     }
@@ -25,11 +28,11 @@ public class HistogramDisplay extends ApplicationFrame {
 
     private DefaultCategoryDataset createDataSet() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.addValue(3, "", "ulpgc.es");
-        dataset.addValue(7, "", "dis.ulpgc.es");
-        dataset.addValue(11, "", "eii.ulpgc.es");
-        dataset.addValue(3, "", "gmail.com");
-        dataset.addValue(5, "", "hotmail.com");
+
+        for (String key : this.histogram.keySet()) {
+            dataset.addValue(this.histogram.get(key), "", key);
+        }
+
         return dataset;
     }
 
